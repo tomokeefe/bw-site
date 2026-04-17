@@ -1,0 +1,38 @@
+---
+// SectionLabel.astro
+// The "01 · COLOR", "02 · WHO" tag pattern used at the top of each section.
+// Gold caps text + hairline extending to the right edge.
+
+interface Props {
+  /** e.g. 'When you\'re ready.' or 'Three ways to work together' */
+  text: string;
+  /** If true, render as muted paper instead of gold (for fold 5 lead-in) */
+  quiet?: boolean;
+  /** If true, render with extra-wide letter spacing */
+  wide?: boolean;
+}
+
+const { text, quiet = false, wide = false } = Astro.props;
+---
+
+<div class="section-label" class:list={[{ 'is-wide': wide }]}>
+  <span class="section-label__text bw-label" class:list={[quiet ? 'bw-muted' : 'bw-gold']}>
+    {text}
+  </span>
+</div>
+
+<style>
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label__text {
+    font-size: var(--bw-size-tag);
+    letter-spacing: var(--bw-ls-caps-wide);
+    white-space: nowrap;
+  }
+  .is-wide .section-label__text {
+    letter-spacing: var(--bw-ls-caps-xwide);
+  }
+</style>

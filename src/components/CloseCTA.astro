@@ -1,0 +1,68 @@
+---
+// CloseCTA.astro
+// Fold 5: the closer. Three elements, centered, vertically generous:
+//   small caps lead-in → big gold statement → underlined email.
+
+interface Props {
+  /** Small lead-in above the headline, e.g. "When you're ready." */
+  leadIn: string;
+  /** The closing statement, full gold. Use \n for line breaks. */
+  statement: string;
+  /** Contact email — shown underlined, clickable */
+  email: string;
+}
+
+const { leadIn, statement, email } = Astro.props;
+const lines = statement.split('\n');
+---
+
+<div class="close">
+  <span class="close__lead bw-label">{leadIn}</span>
+  <h2 class="close__stmt bw-gold">
+    {lines.map((l, i) => (
+      <>
+        {i > 0 && <br />}
+        {l}
+      </>
+    ))}
+  </h2>
+  <a class="close__email" href={`mailto:${email}`}>{email}</a>
+</div>
+
+<style>
+  .close {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 44px;
+    padding: 16px 0;
+  }
+  .close__lead {
+    font-size: var(--bw-size-tag);
+    letter-spacing: var(--bw-ls-caps-xwide);
+    color: var(--bw-paper-45);
+  }
+  .close__stmt {
+    margin: 0;
+    font-family: var(--bw-font-display);
+    font-weight: 700;
+    font-size: var(--bw-size-d1);
+    line-height: 0.92;
+    letter-spacing: -0.005em;
+  }
+  .close__email {
+    color: var(--bw-paper);
+    font-weight: 500;
+    font-size: clamp(20px, 3vw, 30px);
+    text-decoration: underline;
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 6px;
+    text-decoration-color: rgba(255, 255, 255, 0.35);
+    transition: text-decoration-color 0.12s ease;
+  }
+  .close__email:hover,
+  .close__email:focus-visible {
+    text-decoration-color: var(--bw-gold);
+  }
+</style>

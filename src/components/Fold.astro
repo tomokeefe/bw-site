@@ -1,0 +1,60 @@
+---
+// Fold.astro
+// Full-viewport section with consistent padding and internal layout slots.
+// Each page scroll-unit should be a Fold. Nav + PageMarker are siblings,
+// handled at the page level.
+//
+// Slots: top, content, bottom (optional overrides — default layout is flex column)
+
+interface Props {
+  /** Controls minimum height. 'tall' = 620px (engagement fold), default = 560px */
+  size?: 'default' | 'tall';
+  /** Accessible section label for screen readers (not visually shown) */
+  label?: string;
+  /** Optional id for in-page anchors */
+  id?: string;
+}
+
+const { size = 'default', label, id } = Astro.props;
+const minH = size === 'tall' ? '620px' : 'var(--bw-fold-min)';
+---
+
+<section class="fold" style={`--fold-min: ${minH};`} id={id} aria-label={label}>
+  <div class="fold__top">
+    <slot name="top" />
+  </div>
+  <div class="fold__content">
+    <slot />
+  </div>
+  <div class="fold__bottom">
+    <slot name="bottom" />
+  </div>
+</section>
+
+<style>
+  .fold {
+    min-height: var(--fold-min);
+    padding: var(--bw-pad-v) var(--bw-pad-h);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--bw-gap-md);
+  }
+  .fold__top,
+  .fold__bottom {
+    flex: 0 0 auto;
+  }
+  .fold__content {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--bw-gap-sm) 0;
+  }
+
+  @media (max-width: 640px) {
+    .fold {
+      padding: var(--bw-gap-md) var(--bw-gap-md);
+    }
+  }
+</style>

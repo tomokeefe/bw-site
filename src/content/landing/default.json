@@ -1,0 +1,73 @@
+{
+  "hero": {
+    "statement": "The tools change\nevery five years.\n{{The eye doesn't.}}",
+    "footerLine": "Tom O'Keefe  ·  Branding since 1994  ·  150+ companies"
+  },
+
+  "who": {
+    "pullAccent":  "Most brands break\nat Series A.",
+    "pullCounter": "Yours won't.",
+    "paragraphs": [
+      {
+        "kind": "lede",
+        "text": "I'm Tom O'Keefe. I've been building brands since 1994 — back when the job still meant ink on paper and kerning by eye."
+      },
+      {
+        "kind": "body",
+        "text": "Since then I've sat in the chair at Idealab, Microsoft, Adobe, New Relic, and Evite. At New Relic I took the company from 50 employees and a $350M valuation to a $1.4B IPO in two years."
+      },
+      {
+        "kind": "body",
+        "text": "I've put my hands on 150+ brands along the way. {{Most break at Series A. Yours won't.}} I don't write decks. I build brand systems that survive the next round, the next hire, the next pivot — the ones that don't snap when the company does."
+      }
+    ]
+  },
+
+  "work": {
+    "entries": [
+      { "name": "New Relic",        "tier": "hero", "caption": "CREATIVE DIRECTOR  ·  50 PEOPLE TO $1.4B IPO" },
+      { "name": "Microsoft",        "tier": "big" },
+      { "name": "Adobe",            "tier": "big" },
+      { "name": "Evite",            "tier": "big" },
+      { "name": "Idealab",          "tier": "mid" },
+      { "name": "Compete.com",      "tier": "mid" },
+      { "name": "Picasa",           "tier": "mid" },
+      { "name": "Intranets.com",    "tier": "mid" },
+      { "name": "Newbury Networks", "tier": "mid" }
+    ],
+    "tally": "+ 145 MORE SINCE 1994"
+  },
+
+  "engage": {
+    "label": "THREE WAYS TO WORK TOGETHER",
+    "tiers": [
+      {
+        "index":       "01",
+        "stageLabel":  "PRE-SEED",
+        "stage":       "Foundation.",
+        "price":       "FROM $25K  ·  OR EQUITY",
+        "description": "Build it right before you have to rebuild. Naming, wordmark, voice, and a visual system designed to outgrow you."
+      },
+      {
+        "index":       "02",
+        "stageLabel":  "SEED",
+        "stage":       "System.",
+        "price":       "FROM $75K  ·  OR EQUITY",
+        "description": "The full brand system, built for what you're about to become — not what you are. Product, marketing, team-facing."
+      },
+      {
+        "index":       "03",
+        "stageLabel":  "SERIES A",
+        "stage":       "Scale.",
+        "price":       "FROM $150K  ·  RETAINER",
+        "description": "The rebrand you don't have to do. Audit, evolve, stabilize the system for hypergrowth. 12 months of creative direction included."
+      }
+    ]
+  },
+
+  "close": {
+    "leadIn":    "WHEN YOU'RE READY.",
+    "statement": "Let's build the one\nthat doesn't break.",
+    "email":     "hello@brandwhisperer.io"
+  }
+}

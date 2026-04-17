@@ -1,0 +1,57 @@
+---
+// Nav.astro
+// Persistent top nav. Wordmark left, nav right. All caps, tight.
+// Appears inside the `top` slot of every Fold.
+
+interface NavItem { label: string; href: string; }
+interface Props {
+  wordmark?: string;
+  items?: NavItem[];
+}
+
+const {
+  wordmark = 'The Brand Whisperer',
+  items = [
+    { label: 'Work',    href: '#work' },
+    { label: 'System',  href: '#engage' },
+    { label: 'Contact', href: '#contact' },
+  ],
+} = Astro.props;
+---
+
+<nav class="nav" aria-label="Primary">
+  <a class="nav__wordmark bw-label" href="/">{wordmark}</a>
+  <ul class="nav__list" role="list">
+    {items.map((item) => (
+      <li><a class="nav__item bw-label bw-label--tag bw-muted" href={item.href}>{item.label}</a></li>
+    ))}
+  </ul>
+</nav>
+
+<style>
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--bw-gap-md);
+  }
+  .nav__wordmark {
+    color: var(--bw-paper);
+  }
+  .nav__list {
+    display: flex;
+    gap: 34px;
+    margin: 0;
+    padding: 0;
+  }
+  .nav__item {
+    transition: color 0.12s ease;
+  }
+  .nav__item:hover,
+  .nav__item:focus-visible {
+    color: var(--bw-paper);
+  }
+  @media (max-width: 520px) {
+    .nav__list { gap: 18px; }
+  }
+</style>

@@ -1,0 +1,123 @@
+---
+// src/pages/writing/[slug].astro
+// Single blog post view. Markdown body rendered via Astro content.
+
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Nav from '../../components/Nav.astro';
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = (await getCollection('writing')).filter((p) => !p.data.draft);
+  return posts.map((post) => ({ params: { slug: post.slug }, props: { post } }));
+}
+
+interface Props { post: CollectionEntry<'writing'>; }
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const dateStr = post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<BaseLayout
+  title={`${post.data.title} — The Brand Whisperer`}
+  description={post.data.summary}
+  canonical={`https://brandwhisperer.io/writing/${post.slug}/`}
+>
+  <main class="post">
+    <header class="post__head">
+      <Nav />
+      <div class="post__meta">
+        <a class="post__back bw-label bw-muted" href="/writing/">← FIELD NOTES</a>
+        <time class="post__date bw-label bw-label--tag bw-muted" datetime={post.data.date.toISOString()}>
+          {dateStr}
+        </time>
+      </div>
+      <h1 class="post__title bw-d2 bw-paper">{post.data.title}</h1>
+      {post.data.summary && <p class="post__summary bw-lede bw-muted-strong">{post.data.summary}</p>}
+    </header>
+
+    <article class="post__body">
+      <Content />
+    </article>
+
+    <footer class="post__foot">
+      <a class="bw-label bw-muted" href="/writing/">← Back to the archive</a>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  .post {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: var(--bw-pad-v) var(--bw-pad-h);
+  }
+  .post__head { margin-bottom: 40px; }
+  .post__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin: 72px 0 20px;
+  }
+  .post__back { transition: color 0.12s ease; }
+  .post__back:hover { color: var(--bw-paper); }
+  .post__title { margin: 0 0 16px; }
+  .post__summary { margin: 0; max-width: 560px; }
+
+  .post__body {
+    font-family: var(--bw-font-body);
+    font-weight: 300;
+    font-size: var(--bw-size-body);
+    line-height: var(--bw-lh-body);
+    color: var(--bw-paper);
+  }
+  .post__body :global(h2) {
+    font-family: var(--bw-font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 3.2vw, 36px);
+    line-height: 1.05;
+    color: var(--bw-paper);
+    margin: 40px 0 14px;
+  }
+  .post__body :global(h3) {
+    font-family: var(--bw-font-display);
+    font-weight: 700;
+    font-size: clamp(22px, 2.6vw, 28px);
+    color: var(--bw-paper);
+    margin: 32px 0 10px;
+  }
+  .post__body :global(p) { margin: 0 0 18px; }
+  .post__body :global(a) {
+    color: var(--bw-gold);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .post__body :global(blockquote) {
+    border-left: 2px solid var(--bw-gold);
+    padding-left: 20px;
+    margin: 24px 0;
+    color: var(--bw-paper-80);
+    font-style: italic;
+  }
+  .post__body :global(code) {
+    font-family: var(--bw-font-mono);
+    font-size: 0.9em;
+    background: var(--bw-paper-12);
+    padding: 2px 6px;
+    border-radius: 3px;
+  }
+  .post__body :global(pre) {
+    background: var(--bw-paper-12);
+    padding: 16px;
+    overflow-x: auto;
+    margin: 20px 0;
+  }
+  .post__body :global(pre code) { background: none; padding: 0; }
+
+  .post__foot {
+    margin-top: 64px;
+    padding-top: 32px;
+    border-top: var(--bw-hairline-soft);
+  }
+</style>

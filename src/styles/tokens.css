@@ -1,0 +1,73 @@
+/* ─────────────────────────────────────────────────────────
+ * The Brand Whisperer — Design Tokens v1
+ * Ink + gold + paper. Barlow Condensed display, Poppins body.
+ * See /docs/system-v1.pdf for the governing reference.
+ * ───────────────────────────────────────────────────────── */
+
+:root {
+  /* ── Color ────────────────────────────────────────────── */
+  --bw-ink:    #0A0A0A; /* canvas. always. */
+  --bw-gold:   #FBBF24; /* one hit per fold. */
+  --bw-paper:  #FFFFFF; /* everything else. */
+
+  /* Muted whites on ink — by opacity, not by hex */
+  --bw-paper-80: rgba(255, 255, 255, 0.80);
+  --bw-paper-70: rgba(255, 255, 255, 0.70);
+  --bw-paper-55: rgba(255, 255, 255, 0.55);
+  --bw-paper-45: rgba(255, 255, 255, 0.45);
+  --bw-paper-22: rgba(255, 255, 255, 0.22);
+  --bw-paper-12: rgba(255, 255, 255, 0.12);
+
+  /* ── Type families ───────────────────────────────────── */
+  --bw-font-display: 'Barlow Condensed', 'Oswald', 'Impact', sans-serif;
+  --bw-font-body:    'Poppins', 'Inter', 'Helvetica Neue', system-ui, sans-serif;
+  --bw-font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── Display scale (BC Bold, tight) ──────────────────── */
+  /* D1 Statement — the hero sentence */
+  --bw-size-d1:  clamp(64px, 12vw, 132px);
+  --bw-lh-d1:    0.88;
+  --bw-ls-d1:    -0.005em;
+
+  /* D2 Stage — tier names, pullouts */
+  --bw-size-d2:  clamp(48px, 8vw, 82px);
+  --bw-lh-d2:    0.92;
+  --bw-ls-d2:    -0.005em;
+
+  /* D3 Support — secondary display */
+  --bw-size-d3:  clamp(32px, 5vw, 56px);
+  --bw-lh-d3:    1.0;
+  --bw-ls-d3:    -0.002em;
+
+  /* ── Body scale (Poppins) ────────────────────────────── */
+  --bw-size-lede: 17px;    /* voice-check sentence */
+  --bw-size-body: 15px;    /* long-form prose */
+  --bw-size-sm:   14px;    /* descriptions, inline */
+  --bw-size-lbl:  11px;    /* nav, section markers, pagination */
+  --bw-size-tag:  10px;    /* smallest caps tag */
+
+  --bw-lh-body:   1.65;
+  --bw-lh-lede:   1.55;
+
+  /* ── Letter-spacing for caps labels ──────────────────── */
+  --bw-ls-caps:   0.18em;  /* nav, page markers */
+  --bw-ls-caps-wide: 0.22em; /* section labels */
+  --bw-ls-caps-xwide: 0.32em; /* rare hero-stage caps */
+
+  /* ── Space ───────────────────────────────────────────── */
+  --bw-fold-min:  560px;
+  --bw-pad-v:     36px;
+  --bw-pad-h:     48px;
+  --bw-gap-xs:    8px;
+  --bw-gap-sm:    16px;
+  --bw-gap-md:    24px;
+  --bw-gap-lg:    44px;
+
+  /* ── Hairlines ───────────────────────────────────────── */
+  --bw-hairline:  0.5px solid var(--bw-paper-22);
+  --bw-hairline-soft: 0.5px solid var(--bw-paper-12);
+
+  /* ── Content width caps ─────────────────────────────── */
+  --bw-container: 1200px;
+  --bw-prose:     560px;
+}

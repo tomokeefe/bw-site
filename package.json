@@ -1,0 +1,28 @@
+{
+  "name": "brandwhisperer-site",
+  "version": "0.1.0",
+  "description": "The Brand Whisperer — landing site and writing archive, built on EmDash + Astro.",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "deploy": "astro build && wrangler deploy"
+  },
+  "dependencies": {
+    "@astrojs/cloudflare": "^12.6.0",
+    "astro": "^5.0.0",
+    "@fontsource/barlow-condensed": "^5.0.14",
+    "@fontsource/poppins": "^5.0.14"
+  },
+  "devDependencies": {
+    "typescript": "^5.6.0",
+    "wrangler": "^3.90.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

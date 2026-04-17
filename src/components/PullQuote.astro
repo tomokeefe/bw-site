@@ -1,0 +1,40 @@
+---
+// PullQuote.astro
+// Fold 2 left column: a two-tone display pullout.
+// Two parts: gold (the claim) and paper (the counter). Renders as a D2.
+
+interface Props {
+  /** The gold-colored claim, with \n for line breaks */
+  accent: string;
+  /** The paper-colored counter, with \n for line breaks */
+  counter: string;
+}
+
+const { accent, counter } = Astro.props;
+const accentLines = accent.split('\n');
+const counterLines = counter.split('\n');
+---
+
+<h2 class="pullquote bw-d2">
+  <span class="bw-gold">
+    {accentLines.map((l, i) => (
+      <>
+        {i > 0 && <br />}
+        {l}
+      </>
+    ))}
+  </span>
+  <br />
+  <span class="bw-paper">
+    {counterLines.map((l, i) => (
+      <>
+        {i > 0 && <br />}
+        {l}
+      </>
+    ))}
+  </span>
+</h2>
+
+<style>
+  .pullquote { max-width: 100%; }
+</style>

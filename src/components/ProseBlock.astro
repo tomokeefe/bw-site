@@ -1,0 +1,75 @@
+---
+// ProseBlock.astro
+// A column of body prose. Each paragraph can be:
+//   - default:  body weight (300), paper
+//   - lede:     heavier/larger first-impression sentence
+//   - (inline): `{{text}}` marks a gold lift inside any paragraph
+//
+// Shape:
+//   paragraphs: Array<{ kind: 'lede' | 'body'; text: string }>
+
+export interface Paragraph {
+  kind: 'lede' | 'body';
+  text: string;
+}
+
+interface Props {
+  paragraphs: Paragraph[];
+  /** Max width in px; defaults to 420 for two-col layouts */
+  maxWidth?: number;
+}
+
+const { paragraphs, maxWidth = 420 } = Astro.props;
+
+type Segment = { kind: 'text' | 'lift'; value: string };
+function parse(raw: string): Segment[] {
+  const out: Segment[] = [];
+  const re = /\{\{([^{}]+)\}\}/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(raw)) !== null) {
+    if (m.index > last) out.push({ kind: 'text', value: raw.slice(last, m.index) });
+    out.push({ kind: 'lift', value: m[1] });
+    last = re.lastIndex;
+  }
+  if (last < raw.length) out.push({ kind: 'text', value: raw.slice(last) });
+  return out;
+}
+---
+
+<div class="prose" style={`max-width: ${maxWidth}px;`}>
+  {paragraphs.map((p) => {
+    const segments = parse(p.text);
+    const cls = p.kind === 'lede' ? 'prose__p prose__p--lede' : 'prose__p';
+    return (
+      <p class={cls}>
+        {segments.map((seg) =>
+          seg.kind === 'lift'
+            ? <span class="prose__lift">{seg.value}</span>
+            : <>{seg.value}</>
+        )}
+      </p>
+    );
+  })}
+</div>
+
+<style>
+  .prose__p {
+    margin: 0 0 14px;
+    font-family: var(--bw-font-body);
+    font-weight: 300;
+    font-size: var(--bw-size-body);
+    line-height: var(--bw-lh-body);
+    color: var(--bw-paper);
+  }
+  .prose__p:last-child { margin-bottom: 0; }
+  .prose__p--lede {
+    font-weight: 500;
+    font-size: var(--bw-size-lede);
+    line-height: var(--bw-lh-lede);
+  }
+  .prose__lift {
+    font-weight: 500;
+    color: var(--bw-gold);
+  }
+</style>

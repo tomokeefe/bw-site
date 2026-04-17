@@ -1,0 +1,43 @@
+---
+// BaseLayout.astro
+// HTML shell. Imports global styles. Used by every page.
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description?: string;
+  canonical?: string;
+}
+
+const {
+  title,
+  description = 'Building brands that don\'t break at Series A. Tom O\'Keefe — Creative Director, 30+ years, 150+ companies.',
+  canonical,
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    {canonical && <link rel="canonical" href={canonical} />}
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta name="theme-color" content="#0A0A0A" />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

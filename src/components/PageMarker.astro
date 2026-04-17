@@ -1,0 +1,56 @@
+---
+// PageMarker.astro
+// The bottom-right pagination bracket. Optional section label on the left.
+// Terminal form (last=true) swaps the down-arrow for a filled gold square.
+
+interface Props {
+  /** Current page number (1-indexed) */
+  current: number;
+  /** Total pages */
+  total: number;
+  /** Optional section label shown bottom-left (e.g. '02 · WHO') */
+  label?: string;
+  /** Final fold gets a filled square instead of down arrow */
+  last?: boolean;
+}
+
+const { current, total, label, last = false } = Astro.props;
+const pad = (n: number) => n.toString().padStart(2, '0');
+---
+
+<div class="marker-row">
+  {label ? (
+    <span class="marker__label bw-label bw-label--tag bw-muted">{label}</span>
+  ) : <span></span>}
+
+  <span class="marker__pager bw-label bw-label--tag bw-gold">
+    <span>{pad(current)} / {pad(total)}</span>
+    {last ? (
+      <span class="marker__square" aria-hidden="true"></span>
+    ) : (
+      <span class="marker__arrow" aria-hidden="true">↓</span>
+    )}
+  </span>
+</div>
+
+<style>
+  .marker-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: var(--bw-gap-sm);
+  }
+  .marker__label { font-weight: 400; }
+  .marker__pager {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .marker__square {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: var(--bw-gold);
+  }
+  .marker__arrow { font-size: 12px; line-height: 1; }
+</style>

@@ -1,0 +1,90 @@
+---
+// NamesWall.astro
+// Fold 3: curated hierarchy of company names.
+// Hero name (gold, D1-ish), big names row, mid names row, closing tally.
+
+export interface NameEntry {
+  name: string;
+  /** 'hero' | 'big' | 'mid' — controls scale and treatment */
+  tier: 'hero' | 'big' | 'mid';
+  /** Small caption above hero only — e.g. "Creative Director · 50 people to $1.4B IPO" */
+  caption?: string;
+}
+
+interface Props {
+  entries: NameEntry[];
+  /** Gold closing tally — e.g. '+ 145 MORE SINCE 1994' */
+  tally?: string;
+}
+
+const { entries, tally } = Astro.props;
+
+const hero = entries.find((e) => e.tier === 'hero');
+const bigs = entries.filter((e) => e.tier === 'big');
+const mids = entries.filter((e) => e.tier === 'mid');
+---
+
+<div class="wall">
+  {hero && (
+    <div class="wall__hero">
+      {hero.caption && (
+        <div class="wall__caption bw-label bw-label--tag bw-muted">{hero.caption}</div>
+      )}
+      <div class="wall__hero-name bw-d1 bw-gold">{hero.name}</div>
+    </div>
+  )}
+
+  {bigs.length > 0 && (
+    <div class="wall__row wall__row--big">
+      {bigs.map((b) => <span>{b.name}</span>)}
+    </div>
+  )}
+
+  {mids.length > 0 && (
+    <div class="wall__row wall__row--mid">
+      {mids.map((m) => <span>{m.name}</span>)}
+    </div>
+  )}
+
+  {tally && (
+    <div class="wall__tally bw-label bw-label--tag bw-gold">{tally}</div>
+  )}
+</div>
+
+<style>
+  .wall {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 30px;
+    padding: 8px 0;
+  }
+  .wall__hero-name {
+    /* Heroic — bigger than the default D1 */
+    font-size: clamp(80px, 14vw, 148px);
+    line-height: 0.88;
+  }
+  .wall__caption { margin-bottom: 12px; }
+
+  .wall__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: var(--bw-font-display);
+  }
+  .wall__row--big {
+    gap: 44px;
+    font-weight: 700;
+    letter-spacing: -0.002em;
+    font-size: clamp(34px, 5.6vw, 58px);
+    color: var(--bw-paper);
+  }
+  .wall__row--mid {
+    gap: 24px;
+    font-weight: 500;
+    font-size: clamp(18px, 2.6vw, 24px);
+    color: var(--bw-paper-70);
+  }
+  .wall__tally { padding-top: 4px; }
+</style>

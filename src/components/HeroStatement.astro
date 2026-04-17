@@ -1,0 +1,58 @@
+---
+// HeroStatement.astro
+// Fold 1 display: a multi-line statement with one gold phrase.
+// The gold phrase is the final clause — the turn, the punchline.
+//
+// Props.text is a string with a single `{{gold}}` wrapped span marking the
+// accent phrase. Line breaks in the source (\n) become <br/>.
+
+interface Props {
+  /** Headline text with `{{accent phrase}}` markers for the gold hit */
+  text: string;
+}
+
+const { text } = Astro.props;
+
+// Parse the text into segments. Each segment is either plain or accent.
+// Line breaks (\n) are preserved as <br />.
+type Segment = { kind: 'text' | 'accent'; value: string };
+
+function parse(raw: string): Segment[] {
+  const out: Segment[] = [];
+  const re = /\{\{([^{}]+)\}\}/g;
+  let last = 0;
+  let m;
+  while ((m = re.exec(raw)) !== null) {
+    if (m.index > last) out.push({ kind: 'text', value: raw.slice(last, m.index) });
+    out.push({ kind: 'accent', value: m[1] });
+    last = re.lastIndex;
+  }
+  if (last < raw.length) out.push({ kind: 'text', value: raw.slice(last) });
+  return out;
+}
+
+const segments = parse(text);
+---
+
+<h1 class="hero bw-d1">
+  {segments.map((seg) => {
+    const cls = seg.kind === 'accent' ? 'bw-gold' : 'bw-paper';
+    const parts = seg.value.split('\n');
+    return (
+      <span class={cls}>
+        {parts.map((part, i) => (
+          <>
+            {i > 0 && <br />}
+            {part}
+          </>
+        ))}
+      </span>
+    );
+  })}
+</h1>
+
+<style>
+  .hero {
+    max-width: 100%;
+  }
+</style>

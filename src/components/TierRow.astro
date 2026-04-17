@@ -1,0 +1,64 @@
+---
+// TierRow.astro
+// A single tier row on fold 4. Stacked with hairlines via parent container.
+// Structure:
+//   [01 · PRE-SEED]              [FROM $25K · OR EQUITY]
+//   Foundation.
+//   [description copy]
+
+export interface TierContent {
+  /** Numeric index label, shown as '01 · PRE-SEED' */
+  index: string;          // e.g. '01'
+  stageLabel: string;     // e.g. 'PRE-SEED'
+  /** Main stage word, ends with period: 'Foundation.' */
+  stage: string;
+  /** Price or engagement terms — right-aligned cap */
+  price: string;          // e.g. 'FROM $25K · OR EQUITY'
+  /** Short description paragraph */
+  description: string;
+}
+
+interface Props extends TierContent {
+  /** First tier in a stack doesn't get a top hairline */
+  first?: boolean;
+}
+
+const { index, stageLabel, stage, price, description, first = false } = Astro.props;
+---
+
+<div class="tier" class:list={[{ 'tier--first': first }]}>
+  <div class="tier__head">
+    <span class="tier__meta bw-label bw-muted-strong">{index} &nbsp;·&nbsp; {stageLabel}</span>
+    <span class="tier__meta bw-label bw-muted-strong">{price}</span>
+  </div>
+  <h3 class="tier__stage bw-d2 bw-paper">{stage}</h3>
+  <p class="tier__desc bw-body bw-muted-strong">{description}</p>
+</div>
+
+<style>
+  .tier {
+    padding-top: var(--bw-gap-md);
+    margin-top: var(--bw-gap-md);
+    border-top: var(--bw-hairline-soft);
+  }
+  .tier--first {
+    padding-top: 0;
+    margin-top: 0;
+    border-top: none;
+  }
+  .tier__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--bw-gap-sm);
+  }
+  .tier__meta { font-size: var(--bw-size-lbl); }
+  .tier__stage {
+    margin-top: 6px;
+  }
+  .tier__desc {
+    margin-top: 8px;
+    max-width: 560px;
+    font-weight: 300;
+  }
+</style>
